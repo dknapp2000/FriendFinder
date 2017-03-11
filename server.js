@@ -8,10 +8,6 @@ const bodyParser = require( "body-parser" );
 
 var data;
 
-const apiRoutesFile = path.join( __dirname, "app", "routing", "apiRoutes.js" );
-const htmlRoutesFile = path.join( __dirname, "app", "routing","htmlRoutes.js" );
-
-
 const port = 3000;
 
 app.use( function( req, res, next ) {
@@ -24,13 +20,44 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-var apiRoutes = require( apiRoutesFile )(app);
-var htmlRoutes = require( htmlRoutesFile )(app);
-
-app.listen( port, function() {
-    console.log( "Listening on port " + port );
-    data = common.loadData();
+app.post( "/api/friends", function( req, res ) {
+    console.dir( req.body );
+    let match = findMatch( req.body, common.data );
+    console.log( "MATCH! ", match );
+    common.data.push( req.body );
+    common.saveData();
+    res.json( match );
 })
 
+app.get( "/", function( req, res, next ) {
+    var filePath = path.join( __dirname, "app", "public", "home.html" );
+    console.log( "Sending file: " + filePath );
+    res.sendFile( filePath );
+})
 
- 
+app.listen( port, function() {
+    console.log( "Listening on port " + port ); 
+    data = common.loadData();
+});
+
+function findMatch( newEntry, list ) {
+    // Compute the absolute difference between our new entry and the current list.
+    let result = list.map( ( item ) => {
+        let diff = 0;
+        for ( let i=0; i<item.scores.length; i++ ) {
+            diff += Math.abs( item.scores[i] - newEntry.scores[i] );
+        }
+        return diff;
+    })
+    // result[] not contains a list of the abs differences for each entry
+    var lowScore = 9999;
+    var bestMatch = -1;
+    for ( let i = 0; i<result.length; i++ ) {
+        if ( result[i] < lowScore ) {
+            lowScore = result[i];
+            bestMatch = i;
+        }
+    }
+    // The index to the low score is the index to the bext match.
+    return list[bestMatch];
+}
