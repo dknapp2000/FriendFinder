@@ -1,1 +1,5 @@
-[{"name":"New person","photo":"mypic","scores":["2","2","2","2","2","2","2","2","2","2"]},{"name":"222","photo":"xxxxxxx","scores":["2","1","1","1","1","1","1","1","1","1"]},{"name":"222","photo":"xxxxxxx","scores":["2","1","1","1","1","1","1","1","1","1"]},{"name":"222","photo":"xxxxxxx","scores":["2","1","1","1","1","1","1","1","1","1"]}]
+[{
+    "name": "Jack Sprat",
+    "photo": "http://vignette2.wikia.nocookie.net/pussinbootsnetflix/images/d/da/EP_3.jpg/revision/latest?cb=20160209095157",
+    "scores": ["3", "3", "3", "3", "3", "3", "3", "3", "3", "3"]
+}]

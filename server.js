@@ -35,6 +35,10 @@ app.get( "/", function( req, res, next ) {
     res.sendFile( filePath );
 })
 
+app.get( "/api/friends", function( req,res ) {
+    res.json(common.data);
+});
+
 app.listen( port, function() {
     console.log( "Listening on port " + port ); 
     data = common.loadData();
