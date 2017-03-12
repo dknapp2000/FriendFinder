@@ -30,7 +30,7 @@ app.post( "/api/friends", function( req, res ) {
 })
 
 app.get( "/", function( req, res, next ) {
-    var filePath = path.join( __dirname, "app", "public", "home.html" );
+    var filePath = path.join( __dirname, "app", "public", "survey-button.html" );
     console.log( "Sending file: " + filePath );
     res.sendFile( filePath );
 })
